@@ -4,6 +4,9 @@ class Layer_Dense:
   def __init__(self, inputs, neurons):
     self.weights = np.random.randn(inputs, neurons) / np.sqrt(inputs + neurons)
     self.biases = np.zeros((1, neurons))
+    self.momentum = False 
+    self.weight_momentum = 0
+    self.bias_momentum = 0 
 
   def forward(self, inputs):
     self.output = np.dot(inputs, self.weights) + self.biases

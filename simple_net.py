@@ -39,7 +39,7 @@ activation1 = Activation_ReLU()
 dense2 = Layer_Dense(64,3)
 activation2 = Activation_Softmax()
 loss_function = Loss_CategoricalCrossEntropy()
-optimizer = SGD(learning_rate=1.0, decay = 5e-8)
+optimizer = SGD(learning_rate=1.0, decay = 5e-8, momentum=0.9)
 acc = []
 
 X,y = create_data2(100,3)
@@ -78,7 +78,7 @@ for i in range(1000000):
   data3.append(optimizer.learning_rate)
 
   ax1.set_xlim([0,i])
-  ax1.set_ylim([0.33, 0.625])
+  ax1.set_ylim([0.33, 1.0])
   ax2.set_ylim([min(data2), 1.1])
   ax2.set_xlim([0,i])
   ax3.set_xlim([0,i])
