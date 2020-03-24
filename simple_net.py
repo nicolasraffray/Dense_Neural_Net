@@ -46,8 +46,6 @@ X,y = create_data2(100,3)
 
 style.use("fast")
 
-
-
 def run_net(iterations):
   data = []
   data2 = []
@@ -115,9 +113,16 @@ def run_net(iterations):
 
 
 
-    
+ 
+dense1.forward(X)
+activation1.forward(dense1.output)
+dense2.forward(activation1.output)
+activation2.forward(dense2.output)
+loss = loss_function.forward(activation2.output, y)
+predictions = np.argmax(activation2.output, axis=1) 
+accuracy = np.mean(predictions==y)   
 
-    
+  
 
 
 # def softmax_grad(softmax):
