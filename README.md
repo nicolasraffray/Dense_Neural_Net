@@ -41,7 +41,7 @@ This resource is great: https://www.kdnuggets.com/2019/08/numpy-neural-networks-
 ## Running net 
 
 If you fork the repo and in the terminal run 
-$ python3 -i simple_net
+$ python3 -i simple_net.py
 
 NB: To stop the net running close the matplotlib window that pops up and then ctrl + C in your terminal
 

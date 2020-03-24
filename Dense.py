@@ -7,6 +7,10 @@ class Dense_Layer:
     self.momentum = False 
     self.weight_momentum = 0
     self.bias_momentum = 0 
+    self.rmsprop = False
+    self.eG2weights = 0
+    self.eG2biases = 0 
+    
 
   def forward(self, inputs):
     self.output = np.dot(inputs, self.weights) + self.biases

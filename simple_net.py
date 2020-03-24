@@ -39,81 +39,73 @@ activation1 = Activation_ReLU()
 dense2 = Dense_Layer(64,3)
 activation2 = Activation_Softmax()
 loss_function = Loss_CategoricalCrossEntropy()
-optimizer = SGD(learning_rate=1.0, decay = 5e-8, momentum=0.9)
+optimizer = SGD(learning_rate=1.0,decay=5e-8, momentum=0.90)
 acc = []
 
 X,y = create_data2(100,3)
 
 style.use("fast")
 
-def run_net(iterations):
-  data = []
-  data2 = []
-  data3 = []
-  fig = plt.figure()
-  ax1 = fig.add_subplot(1,3,1)
-  ax2 = fig.add_subplot(1,3,2)
-  ax3 = fig.add_subplot(1,3,3)
-  line, = ax1.plot(data)
-  line2, = ax2.plot(data2)
-  line3, = ax3.plot(data3)
-  plt.ion()
-  plt.show()
+def run_net(iterations, plot = True):
+  if plot == True:
+    data = []
+    data2 = []
+    data3 = []
+    fig = plt.figure()
+    ax1 = fig.add_subplot(1,3,1)
+    ax2 = fig.add_subplot(1,3,2)
+    ax3 = fig.add_subplot(1,3,3)
+    line, = ax1.plot(data)
+    line2, = ax2.plot(data2)
+    line3, = ax3.plot(data3)
+    plt.ion()
+    plt.show()
   for i in range(iterations): 
-
     # Forward Prop
     dense1.forward(X)
     activation1.forward(dense1.output)
     dense2.forward(activation1.output)
     activation2.forward(dense2.output)
-
     loss = loss_function.forward(activation2.output, y)
-
     predictions = np.argmax(activation2.output, axis=1) 
     accuracy = np.mean(predictions==y)
 
-    data.append(accuracy)
-    data2.append(loss)
-    data3.append(optimizer.learning_rate)
+    if plot == True:
+      data.append(accuracy)
+      data2.append(loss)
+      data3.append(optimizer.learning_rate)
+      ax1.set_xlim([0,i])
+      ax1.set_ylim([0.33, 1.0])
+      ax2.set_ylim([min(data2), 1.1])
+      ax2.set_xlim([0,i])
+      ax3.set_xlim([0,i])
+      ax3.set_ylim([min(data3), max(data3)])
+      line.set_ydata(data)
+      line.set_xdata(range(len(data)))
+      line2.set_ydata(data2)
+      line2.set_xdata(range(len(data2)))
+      line3.set_ydata(data3)
+      line3.set_xdata(range(len(data3)))
+      plt.pause(0.01)
 
-    ax1.set_xlim([0,i])
-    ax1.set_ylim([0.33, 1.0])
-    ax2.set_ylim([min(data2), 1.1])
-    ax2.set_xlim([0,i])
-    ax3.set_xlim([0,i])
-    ax3.set_ylim([min(data3), max(data3)])
-
-    line.set_ydata(data)
-    line.set_xdata(range(len(data)))
-    line2.set_ydata(data2)
-    line2.set_xdata(range(len(data2)))
-    line3.set_ydata(data3)
-    line3.set_xdata(range(len(data3)))
-
-    plt.pause(0.01)
-  
 
     if i % 5 == 0:
-      # if i % 100 == 0:
-      #   print("ep:", i, "loss:", loss, "acc:", accuracy, "LR", optimizer.learning_rate)
-
+      if i % 100 == 0:
+        print("ep:", i, "loss:", loss, "acc:", accuracy, "LR", optimizer.learning_rate)
       # Backprop
       loss_function.backward(activation2.output,y)
       activation2.backward(loss_function.derivatives)
       dense2.backward(activation2.derivatives)
       activation1.backward(dense2.derivatives)
       dense1.backward(activation1.derivatives)
-
       # Weight update
       optimizer.pre_update()
       optimizer.update(dense1)
       optimizer.update(dense2)
       optimizer.post_update()
 
+run_net(10000,False)  
 
-
-
- 
 dense1.forward(X)
 activation1.forward(dense1.output)
 dense2.forward(activation1.output)
