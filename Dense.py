@@ -1,6 +1,6 @@
 import numpy as np 
 
-class Layer_Dense:
+class Dense_Layer:
   def __init__(self, inputs, neurons):
     self.weights = np.random.randn(inputs, neurons) / np.sqrt(inputs + neurons)
     self.biases = np.zeros((1, neurons))
