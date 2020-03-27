@@ -51,10 +51,11 @@ def run_net(iterations, plot = True):
     data = []
     data2 = []
     data3 = []
-    fig = plt.figure()
-    ax1 = fig.add_subplot(1,3,1)
-    ax2 = fig.add_subplot(1,3,2)
-    ax3 = fig.add_subplot(1,3,3)
+    fig = plt.figure(constrained_layout=True)
+    gs = fig.add_gridspec(3, 6)
+    ax1 = fig.add_subplot(gs[0, 4:])
+    ax2 = fig.add_subplot(gs[1, 4:])
+    ax3 = fig.add_subplot(gs[-1, 4:])
     line, = ax1.plot(data)
     line2, = ax2.plot(data2)
     line3, = ax3.plot(data3)
@@ -104,7 +105,7 @@ def run_net(iterations, plot = True):
       optimizer.update(dense2)
       optimizer.post_update()
 
-run_net(10000,False)  
+run_net(10000)  
 
 dense1.forward(X)
 activation1.forward(dense1.output)
