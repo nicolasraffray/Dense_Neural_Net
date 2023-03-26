@@ -1,3 +1,5 @@
+# Neural Network with Numpy
+
 ## Current Status 
 
 I've deaded out and deleted a lot of code form inside the for loop of the run_nn function. Was just trying to get a hang of the backprop keeping it there right now for reference
